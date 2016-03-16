@@ -15,6 +15,7 @@ class ossec::client(
   $manage_repo             = true,
   $manage_epel_repo        = true,
   $manage_client_keys      = true,
+  $syscheck_skip_nfs       = true,
 ) inherits ossec::params {
   validate_bool(
     $ossec_active_response, $ossec_rootcheck,
