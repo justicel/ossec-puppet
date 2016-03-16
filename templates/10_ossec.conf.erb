@@ -95,8 +95,9 @@
 <% @ossec_ignorepaths.each do |path| -%>
     <ignore><%= path %></ignore>
 <% end -%>
-<% if @syscheck_skip_nfs then -%>
-    <skip_nfs>yes</skip_nfs>
+<% @ossec_ignoreregex.each do |path| -%>
+    <ignore type="sregex">^<%= path %></ignore>
+    <ignore type="sregex"><%= path %>/\.*</ignore>
 <% end -%>
   </syscheck>
 

@@ -9,6 +9,7 @@ class ossec::server (
   $ossec_global_stat_level             = 8,
   $ossec_email_alert_level             = 7,
   $ossec_ignorepaths                   = [],
+  $ossec_ignoreregex                   = [],
   $ossec_scanpaths                     = [ {'path' => '/etc,/usr/bin,/usr/sbin', 'report_changes' => 'no', 'realtime' => 'no'}, {'path' => '/bin,/sbin', 'report_changes' => 'yes', 'realtime' => 'yes'} ],
   $ossec_white_list                    = [],
   $ossec_extra_rules_config            = [],
@@ -25,7 +26,6 @@ class ossec::server (
   $manage_repos                        = true,
   $manage_epel_repo                    = true,
   $manage_client_keys                  = true,
-  $syscheck_skip_nfs                   = true,
 ) inherits ossec::params {
   validate_bool(
     $ossec_active_response, $ossec_rootcheck,
@@ -35,6 +35,7 @@ class ossec::server (
   # (commented due to stdlib version requirement)
   #validate_integer($ossec_check_frequency, undef, 1800)
   validate_array($ossec_ignorepaths)
+  validate_array($ossec_ignoreregex)
 
   if $::osfamily == 'windows' {
     fail('The ossec module does not yet support installing the OSSEC HIDS server on Windows')

@@ -7,6 +7,7 @@ class ossec::client(
   $ossec_scanpaths         = [],
   $ossec_emailnotification = 'yes',
   $ossec_ignorepaths       = [],
+  $ossec_ignoreregex       = [],
   $ossec_local_files       = {},
   $ossec_check_frequency   = 79200,
   $selinux                 = false,
@@ -15,7 +16,6 @@ class ossec::client(
   $manage_repo             = true,
   $manage_epel_repo        = true,
   $manage_client_keys      = true,
-  $syscheck_skip_nfs       = true,
 ) inherits ossec::params {
   validate_bool(
     $ossec_active_response, $ossec_rootcheck,
@@ -25,6 +25,7 @@ class ossec::client(
   # (commented due to stdlib version requirement)
   #validate_integer($ossec_check_frequency, undef, 1800)
   validate_array($ossec_ignorepaths)
+  validate_array($ossec_ignoreregex)
 
   if ( ( $ossec_server_ip == undef ) and ( $ossec_server_hostname == undef ) ) {
     fail('must pass either $ossec_server_ip or $ossec_server_hostname to Class[\'ossec::client\'].')
